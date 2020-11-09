@@ -35,3 +35,4 @@ build/
 error.log
 mvnw
 mvnw.cmd
+application.properties
