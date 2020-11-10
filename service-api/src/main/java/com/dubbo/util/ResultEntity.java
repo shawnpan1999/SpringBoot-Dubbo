@@ -60,7 +60,7 @@ public class ResultEntity implements Serializable {
     /**
      * 转化为Json字符串
      * @return Json字符串
-     * 一般成功就 getJSONString(0, msg, data); 失败就 getJSONString(1, errorMsg);
+     * 一般成功就 new ResultEntity(0, msg, data); 失败就 new ResultEntity(errCode, errorMsg);
      */
     public String toJSONString() {
         JSONObject json = new JSONObject();

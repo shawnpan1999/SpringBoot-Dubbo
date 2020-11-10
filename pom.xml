@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>dubbo-api</module>
+        <module>service-api</module>
         <module>controller-consumer</module>
         <module>user-provider</module>
         <module>product-provider</module>
