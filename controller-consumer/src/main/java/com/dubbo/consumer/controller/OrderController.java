@@ -30,6 +30,18 @@ public class OrderController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/list")
+    public String listProducts(@RequestParam(value = "userId") int userId) {
+        try {
+            ResultEntity result = orderService.listOrder(userId);
+            return result.toJSONString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultEntity(1, "获取订单异常").toJSONString();
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/pay")
     public String payOrder(@RequestParam(value = "id") int id) {
         try {

@@ -11,6 +11,7 @@ import com.dubbo.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @org.springframework.stereotype.Service
@@ -21,6 +22,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDAO orderDAO;
+
+    @Override
+    public ResultEntity listOrder(int userId) {
+        ResultEntity result = new ResultEntity();
+        List<Order> orders = orderDAO.selectByUserId(userId);
+        if (orders.isEmpty()) {
+            result.setCode(1);
+            result.setMsg("没有订单");
+            return result;
+        }
+        result.setCode(0);
+        result.setMsg("总共有" + orders.size() + "个订单");
+        result.getData().put("orders", orders);
+        return result;
+    }
 
     @Override
     public ResultEntity createOrder(int userId, int productId, int amount) {

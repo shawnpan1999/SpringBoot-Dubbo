@@ -19,7 +19,7 @@ public interface OrderDAO {
     Order selectById(int id);
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where userId=#{userId}"})
-    List<Order> selectByUserId(String userId);
+    List<Order> selectByUserId(int userId);
 
     @Update({"update ", TABLE_NAME, " set status=#{status} where id=#{id}"})
     void updateStatusById(int id, int status);
