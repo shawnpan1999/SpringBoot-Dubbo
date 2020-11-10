@@ -10,7 +10,7 @@ public class Order implements Serializable {
     private int amount;
     private float unitPrice;
     private float totalPrice;
-    private Date createdDate;
+    private Date createDate;
     private Date finishDate;
     private int status;    //订单状态：0刚创建未付款，1已付款未收货，2已完成；-1已取消
 
@@ -70,12 +70,12 @@ public class Order implements Serializable {
         this.finishDate = finishDate;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public int getStatus() {
@@ -90,13 +90,13 @@ public class Order implements Serializable {
 
     }
 
-    public Order(int userId, int productId, int amount, float unitPrice, Date createdDate, int status) {
+    public Order(int userId, int productId, int amount, float unitPrice, Date createDate, int status) {
         this.userId = userId;
         this.productId = productId;
         this.amount = amount;
         this.unitPrice = unitPrice;
         this.totalPrice = unitPrice * amount;
-        this.createdDate = createdDate;
+        this.createDate = createDate;
         this.status = status;
     }
 }

@@ -56,12 +56,18 @@ public class OrderServiceImpl implements OrderService {
             result.setMsg("订单不存在");
             return result;
         }
-        if (order.getStatus() != 1) {
+        int state = order.getStatus();
+        if (state == -1) {
             result.setCode(2);
+            result.setMsg("订单已取消");
+            return result;
+        }
+        if (state != 0) {
+            result.setCode(3);
             result.setMsg("订单不可付款");
             return result;
         }
-        orderDAO.updateStatusById(id, 2);
+        orderDAO.updateStatusById(id, 1);
         result.setCode(0);
         result.setMsg("订单付款成功");
         return result;
@@ -76,12 +82,18 @@ public class OrderServiceImpl implements OrderService {
             result.setMsg("订单不存在");
             return result;
         }
-        if (order.getStatus() != 2) {
+        int state = order.getStatus();
+        if (state == -1) {
             result.setCode(2);
+            result.setMsg("订单已取消");
+            return result;
+        }
+        if (state != 1) {
+            result.setCode(3);
             result.setMsg("订单尚未付款");
             return result;
         }
-        orderDAO.updateStatusById(id, 3);
+        orderDAO.updateStatusById(id, 2);
         result.setCode(0);
         result.setMsg("订单完成");
         return result;
@@ -96,9 +108,15 @@ public class OrderServiceImpl implements OrderService {
             result.setMsg("订单不存在");
             return result;
         }
-        if (order.getStatus() != 0) {
+        int state = order.getStatus();
+        if (state == -1) {
             result.setCode(2);
-            result.setMsg("订单不可取消");
+            result.setMsg("订单已取消");
+            return result;
+        }
+        if (state == 2) {
+            result.setCode(3);
+            result.setMsg("订单已经完成");
             return result;
         }
         orderDAO.updateStatusById(id, -1);
@@ -117,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
             return result;
         }
         int state = order.getStatus();
-        if (state != -1 && state!= 3) {
+        if (state != -1 && state!= 2) {
             result.setCode(2);
             result.setMsg("订单还未完成");
             return result;

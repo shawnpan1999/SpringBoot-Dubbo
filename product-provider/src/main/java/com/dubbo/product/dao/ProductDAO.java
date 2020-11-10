@@ -26,7 +26,7 @@ public interface ProductDAO {
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where productName=#{productName}"})
     List<Product> selectByProductName(String productName);
 
-    @Update({"update ", TABLE_NAME, " set stock=#{stock}, set sales=#{sales} where id=#{id}"})
+    @Update({"update ", TABLE_NAME, " set stock=#{stock}, sales=#{sales} where id=#{id}"})
     void updateStockAndSalesById(int id, int stock, int sales);
 
     @Delete({"delete from ", TABLE_NAME, " where id=#{id}"})
