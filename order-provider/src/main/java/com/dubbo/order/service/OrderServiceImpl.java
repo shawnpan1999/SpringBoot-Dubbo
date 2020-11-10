@@ -40,6 +40,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order(userId, product.getId(), amount, unitPrice, new Date(), 0);
 
         orderDAO.addOrder(order);
+        productService.updateStockSales(product.getId(), product.getStock() - amount, product.getSales() + amount);
         result.setCode(0);
         result.setMsg("创建订单成功");
         result.getData().put("order", order);

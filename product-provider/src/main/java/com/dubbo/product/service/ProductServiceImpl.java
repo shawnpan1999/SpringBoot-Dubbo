@@ -90,6 +90,17 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+    @Override
+    public ResultEntity listProducts(int offset, int limit) {
+        ResultEntity result = new ResultEntity();
+        List<Product> products = new ArrayList<>();
+        products = productDAO.selectByOffset(offset, limit);
+        result.setCode(0);
+        result.setMsg("获取商品成功");
+        result.getData().put("products", products);
+        return result;
+    }
+
     /**
      * 删除商品
      * @param id 商品 id

@@ -10,6 +10,8 @@ public interface ProductService {
 
     public ResultEntity getProducts(String searchName);
 
+    public ResultEntity listProducts(int offset, int limit);
+
     public ResultEntity getProduct(int id);
 
     public ResultEntity deleteProduct(int id);
