@@ -2,11 +2,11 @@
 
 ### 1.1 总体架构
 
-![](http://psw.life/imgCloud/img/SpringBoot-Dubbo.png)
+![](https://camo.githubusercontent.com/37973860734f962d54a0657bfc34e47020008900aafbb02497958f874b302ef5/687474703a2f2f7073772e6c6966652f696d67436c6f75642f696d672f537072696e67426f6f742d447562626f2e706e67)
 
 ### 1.2 微服务模块结构
 
-![](http://psw.life/imgCloud/img/modules.jpg)
+![](https://camo.githubusercontent.com/34cab6a34879c93e18b7f4812c21b1268351ba312befd925ac7e14d56b3b8423/687474703a2f2f7073772e6c6966652f696d67436c6f75642f696d672f6d6f64756c65732e6a7067)
 
 #### 1.2.1 控制层后端 controller-consumer
 
@@ -245,7 +245,7 @@ API 模块定义了其他模块公用的依赖，包括各种实体(用户、商
 
 ### 1.4 模块依赖
 
-<img src="http://psw.life/imgCloud/img/module_dependency.png" style="zoom: 50%;" />
+<img src="https://camo.githubusercontent.com/d74e3a36904ffe1a2a026dea9524eab68a34d96e04fed0d18e1621bce5b0b6b0/687474703a2f2f7073772e6c6966652f696d67436c6f75642f696d672f6d6f64756c655f646570656e64656e63792e706e67" style="zoom: 50%;" />
 
 service-api 模块包含了其他所有模块的公共依赖，是依赖图中的最底层。
 

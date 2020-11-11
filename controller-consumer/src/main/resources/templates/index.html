@@ -16,13 +16,19 @@
 <body>
 <!--导航栏-->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" th:if="${#strings.isEmpty(user)}">
         <li class="nav-item active">
-            <a class="nav-link" data-toggle="modal" data-target="#loginModal"
-               th:if="${#strings.isEmpty(user)}" th:text="登录"></a>
-            <a class="nav-link" th:if="${!#strings.isEmpty(user)}" th:text="${user.username}"></a>
+            <a class="nav-link" data-toggle="modal" data-target="#loginModal" href="#" th:text="登录"></a>
         </li>
-        <li class="nav-item" th:if="${!#strings.isEmpty(user)}">
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="modal" data-target="#regModal" href="#" th:text="注册"></a>
+        </li>
+    </ul>
+    <ul class="navbar-nav" th:if="!${#strings.isEmpty(user)}">
+        <li class="nav-item active">
+            <a class="nav-link" th:text="${user.username}"></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link"  href="/logout">退出</a>
         </li>
     </ul>
@@ -158,13 +164,45 @@
                 <div class="form-group">
                     <label for="loginPassword" class="col-sm-3 control-label">密码</label>
                     <div class="col-sm-9">
-                        <input  type="text" class="form-control" id="loginPassword" name="password" required/>
+                        <input type="password" class="form-control" id="loginPassword" name="password" required/>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="login()">登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 注册模态框 -->
+<div class="modal fade" id="regModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">注册</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="regUsername" class="col-sm-3 control-label">用户名</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="regUsername" name="username" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword" class="col-sm-3 control-label">密码</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="regPassword" name="password" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="registerUser()">注册</button>
             </div>
         </div>
     </div>

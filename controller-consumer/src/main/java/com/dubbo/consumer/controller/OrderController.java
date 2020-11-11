@@ -56,13 +56,15 @@ public class OrderController {
     @RequestMapping(value = "/list")
     public String listOrders(@RequestParam(value = "userId") int userId) {
         try {
+            ResultEntity result = new ResultEntity();
             ResultEntity orderListResult = orderService.listOrder(userId);
             List<Order> tempOrders = (List<Order>)orderListResult.getData().get("orders");
             List<OrderModel> orders = new ArrayList<>();
-            for (Order order : tempOrders) {
-                orders.add(orderToOrderModel(order));
+            if (tempOrders != null && tempOrders.size() != 0) {
+                for (Order order : tempOrders) {
+                    orders.add(orderToOrderModel(order));
+                }
             }
-            ResultEntity result = new ResultEntity();
             result.setCode(0);
             result.getData().put("orders", orders);
             return result.toJSONString();

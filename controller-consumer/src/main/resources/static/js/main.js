@@ -58,6 +58,33 @@ function login() {
     });
 }
 
+function registerUser() {
+    var username = document.getElementById("regUsername").value;
+    var password = document.getElementById("regPassword").value;
+    $.ajax({
+        type : "post",
+        url : "/user/register",
+        dataType: "json",
+        data : {
+            username: username,
+            password: password,
+        },
+        success : function(result){
+            if (result.code == 0) {
+                bs4pop.notice("注册成功");
+                setTimeout(function () {
+                    location.reload();
+                }, 500);
+            } else {
+                bs4pop.notice(result.msg, {type: "danger"});
+            }
+        },
+        error : function(result){
+            bs4pop.notice("未知错误", {type: "danger"});
+        }
+    });
+}
+
 function refreshOrders(userId) {
     $.ajax({
         type : "post",
@@ -78,7 +105,7 @@ function refreshOrders(userId) {
                     setOrderLineByBid(tr, orders[x], x);
                 }
             } else {
-                bs4pop.notice("拉取订单列表失败", {type: "danger"});
+                bs4pop.notice(result.msg, {type: "danger"});
             }
         },
         error : function(result){
