@@ -27,9 +27,14 @@ public class OrderController {
 
 
     public OrderModel orderToOrderModel(Order order) {
-        ResultEntity tempResult = productService.getProduct(order.getProductId());
-        String tempName = ((Product)tempResult.getData().get("product")).getProductName();
-        OrderModel orderModel = new OrderModel(order.getId(), tempName, order.getAmount(), order.getUnitPrice(), order.getTotalPrice(), order.getCreateDate(), order.getStatus());
+        String productName;
+        try {
+            ResultEntity tempResult = productService.getProduct(order.getProductId());
+            productName = ((Product)tempResult.getData().get("product")).getProductName();
+        } catch(Exception e) {
+            productName = "暂无商品名称";
+        }
+        OrderModel orderModel = new OrderModel(order.getId(), productName, order.getAmount(), order.getUnitPrice(), order.getTotalPrice(), order.getCreateDate(), order.getStatus());
         return orderModel;
     }
 
@@ -49,7 +54,7 @@ public class OrderController {
 
     @ResponseBody
     @RequestMapping(value = "/list")
-    public String listProducts(@RequestParam(value = "userId") int userId) {
+    public String listOrders(@RequestParam(value = "userId") int userId) {
         try {
             ResultEntity orderListResult = orderService.listOrder(userId);
             List<Order> tempOrders = (List<Order>)orderListResult.getData().get("orders");

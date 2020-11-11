@@ -37,9 +37,13 @@ public class PassportInterceptor implements HandlerInterceptor {
             }
         }
         //验证 ticket 是否有效
-        if (ticket != null) {
-            User user = (User) userService.verifyTicket(ticket).getData().get("user");
-            hostHolder.setUser(user);
+        try {
+            if (ticket != null) {
+                User user = (User) userService.verifyTicket(ticket).getData().get("user");
+                hostHolder.setUser(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return true;
     }

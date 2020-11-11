@@ -72,40 +72,7 @@
                 </tr>
                 </thead>
                 <tbody id="orderTableBody">
-                <tr th:each="order,indexInc:${orders}" th:id="orderLine+(${indexInc.index})">
-                    <td><div th:text="${order.id}"></div></td>
-                    <td><div th:text="${order.productName}"></div></td>
-                    <td><div th:text="${order.unitPrice}"></div></td>
-                    <td><div th:text="${order.amount}"></div></td>
-                    <td><div th:text="${order.totalPrice}"></div></td>
-                    <td><div th:text="${order.createDate}"></div></td>
-                    <td><div th:text="${order.statusName}"></div></td>
-                    <td th:id="buttonset+(${indexInc.index})" th:switch="${order.status}">
-                        <div th:case="-1">
-                            <button type="button" class="btn btn-outline-danger btn-sm" th:id="delete+(${indexInc.index})"
-                                    th:data-oid="${order.id}" th:data-bid="${indexInc.index}"
-                                    onclick="orderDelete(this.getAttribute('data-oid'), this.getAttribute('data-bid'))">删除订单</button>
-                        </div>
-                        <div th:case="0">
-                            <button type="button" class="btn btn-outline-info btn-sm" th:id="pay+(${indexInc.index})"
-                                    th:data-oid="${order.id}" th:data-bid="${indexInc.index}"
-                                    onclick="orderPay(this.getAttribute('data-oid'),this.getAttribute('data-bid'))">付款</button>
-                            <button type="button" class="btn btn-outline-danger btn-sm" th:id="cancel+(${indexInc.index})"
-                                    th:data-oid="${order.id}" th:data-bid="${indexInc.index}"
-                                    onclick="orderCancel(this.getAttribute('data-oid'), this.getAttribute('data-bid'))">取消订单</button>
-                        </div>
-                        <div th:case="1">
-                            <button type="button" class="btn btn-outline-info btn-sm" th:id="finish+(${indexInc.index})"
-                                    th:data-oid="${order.id}" th:data-bid="${indexInc.index}"
-                                    onclick="orderFinish(this.getAttribute('data-oid'),this.getAttribute('data-bid'))">确认收货</button>
-                        </div>
-                        <div th:case="2">
-                            <button type="button" class="btn btn-outline-danger btn-sm" th:id="delete+(${indexInc.index})"
-                                    th:data-oid="${order.id}" th:data-bid="${indexInc.index}"
-                                    onclick="orderDelete(this.getAttribute('data-oid'), this.getAttribute('data-bid'))">删除订单</button>
-                        </div>
-                    </td>
-                </tr>
+
                 </tbody>
             </table>
         </div>
@@ -156,6 +123,12 @@
     </div><!-- /.modal -->
 </div>
 
+<script  th:inline="javascript">
+    window.onload=function(){
+        var userId = [[${user.id}]];
+        refreshOrders(userId);
+    };
+</script>
 </body>
 
 </html>

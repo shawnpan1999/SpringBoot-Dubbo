@@ -8,7 +8,6 @@ function orderCreate() {
     var userId = document.getElementById("orderCreateUserId").value;
     var productId = document.getElementById("orderCreateProductId").value;
     var amount = document.getElementById("orderCreateAmount").value;
-    bs4pop.notice("正在创建订单..", {type: "primary"});
     $.ajax({
         type : "post",
         url : "/order/create",
@@ -63,7 +62,6 @@ function refreshOrders(userId) {
 
 function orderDelete(oid, bid) {
     disableOrderButtons(bid);
-    bs4pop.notice("正在删除订单.", {type: "primary"});
     $.ajax({
         type : "post",
         url : "/order/delete",
@@ -186,7 +184,7 @@ function changeButtonsByStatus(buttonSet, oid, bid, status) {
     if (status == '1') {
         buttonSet.innerHTML = "<div>\n" +
             "<button type=\"button\" class=\"btn btn-outline-info btn-sm\" id=\"finish"+bid+"\"" +
-            "    onclick=\"orderPay('"+oid+"','"+bid+"')\">确认收货</button>\n" +
+            "    onclick=\"orderFinish('"+oid+"','"+bid+"')\">确认收货</button>\n" +
             "</div>"
     }
     if (status == '2') {

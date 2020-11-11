@@ -9,7 +9,6 @@ import com.dubbo.service.OrderService;
 import com.dubbo.service.ProductService;
 import com.dubbo.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Date;
 import java.util.List;
 
@@ -86,6 +85,7 @@ public class OrderServiceImpl implements OrderService {
         orderDAO.updateStatusById(id, 1);
         result.setCode(0);
         result.setMsg("订单付款成功");
+        order = orderDAO.selectById(id);
         result.getData().put("order", order);
         return result;
     }
@@ -113,6 +113,7 @@ public class OrderServiceImpl implements OrderService {
         orderDAO.updateStatusById(id, 2);
         result.setCode(0);
         result.setMsg("订单完成");
+        order = orderDAO.selectById(id);
         result.getData().put("order", order);
         return result;
     }
@@ -140,6 +141,7 @@ public class OrderServiceImpl implements OrderService {
         orderDAO.updateStatusById(id, -1);
         result.setCode(0);
         result.setMsg("订单已取消");
+        order = orderDAO.selectById(id);
         result.getData().put("order", order);
         return result;
     }
