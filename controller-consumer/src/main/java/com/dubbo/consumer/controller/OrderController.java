@@ -25,6 +25,14 @@ public class OrderController {
     @Reference
     private ProductService productService;
 
+
+    public OrderModel orderToOrderModel(Order order) {
+        ResultEntity tempResult = productService.getProduct(order.getProductId());
+        String tempName = ((Product)tempResult.getData().get("product")).getProductName();
+        OrderModel orderModel = new OrderModel(order.getId(), tempName, order.getAmount(), order.getUnitPrice(), order.getTotalPrice(), order.getCreateDate(), order.getStatus());
+        return orderModel;
+    }
+
     @ResponseBody
     @RequestMapping(value = "/create")
     public String createOrder(@RequestParam(value = "userId") int userId,
@@ -46,13 +54,8 @@ public class OrderController {
             ResultEntity orderListResult = orderService.listOrder(userId);
             List<Order> tempOrders = (List<Order>)orderListResult.getData().get("orders");
             List<OrderModel> orders = new ArrayList<>();
-            ResultEntity tempResult;
-            String tempName;
             for (Order order : tempOrders) {
-                tempResult = productService.getProduct(order.getProductId());
-                tempName = ((Product)tempResult.getData().get("product")).getProductName();
-                OrderModel orderModel = new OrderModel(order.getId(), tempName, order.getAmount(), order.getUnitPrice(), order.getTotalPrice(), order.getCreateDate(), order.getStatus());
-                orders.add(orderModel);
+                orders.add(orderToOrderModel(order));
             }
             ResultEntity result = new ResultEntity();
             result.setCode(0);
@@ -68,7 +71,10 @@ public class OrderController {
     @RequestMapping(value = "/pay")
     public String payOrder(@RequestParam(value = "id") int id) {
         try {
-            ResultEntity result = orderService.payOrder(id);
+            ResultEntity result = new ResultEntity();
+            Order orderTemp = (Order)orderService.payOrder(id).getData().get("order");
+            result.setCode(0);
+            result.getData().put("order", orderToOrderModel(orderTemp));
             return result.toJSONString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,7 +86,11 @@ public class OrderController {
     @RequestMapping(value = "/finish")
     public String finishOrder(@RequestParam(value = "id") int id) {
         try {
-            ResultEntity result = orderService.finishOrder(id);
+            ResultEntity result = new ResultEntity();
+            ResultEntity resultTemp = orderService.finishOrder(id);
+            Order orderTemp = (Order)resultTemp.getData().get("order");
+            result.setCode(0);
+            result.getData().put("order", orderToOrderModel(orderTemp));
             return result.toJSONString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +102,10 @@ public class OrderController {
     @RequestMapping(value = "/cancel")
     public String cancelOrder(@RequestParam(value = "id") int id) {
         try {
-            ResultEntity result = orderService.cancelOrder(id);
+            ResultEntity result = new ResultEntity();
+            Order orderTemp = (Order)orderService.cancelOrder(id).getData().get("order");
+            result.setCode(0);
+            result.getData().put("order", orderToOrderModel(orderTemp));
             return result.toJSONString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,4 +124,5 @@ public class OrderController {
             return new ResultEntity(1, "订单删除异常").toJSONString();
         }
     }
+
 }

@@ -113,6 +113,7 @@ public class OrderServiceImpl implements OrderService {
         orderDAO.updateStatusById(id, 2);
         result.setCode(0);
         result.setMsg("订单完成");
+        result.getData().put("order", order);
         return result;
     }
 
@@ -139,6 +140,7 @@ public class OrderServiceImpl implements OrderService {
         orderDAO.updateStatusById(id, -1);
         result.setCode(0);
         result.setMsg("订单已取消");
+        result.getData().put("order", order);
         return result;
     }
 

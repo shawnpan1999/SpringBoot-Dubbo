@@ -7,7 +7,7 @@ function modelFill(userId, productId, productName) {
 function orderCreate() {
     var userId = document.getElementById("orderCreateUserId").value;
     var productId = document.getElementById("orderCreateProductId").value;
-    var amount = document.getElementById("containerCreateAmount").value;
+    var amount = document.getElementById("orderCreateAmount").value;
     bs4pop.notice("正在创建订单..", {type: "primary"});
     $.ajax({
         type : "post",
@@ -69,7 +69,7 @@ function orderDelete(oid, bid) {
         url : "/order/delete",
         dataType: "json",
         data : {
-            oid: oid,
+            id: oid,
         },
         success : function(result){
             if (result.code == 0) {
@@ -87,13 +87,13 @@ function orderDelete(oid, bid) {
 }
 
 function orderPay(oid, bid) {
-    disableContainerButtons(bid);
+    disableOrderButtons(bid);
     $.ajax({
         type : "post",
         url : "/order/pay",
         dataType: "json",
         data : {
-            oid: oid,
+            id: oid,
         },
         success : function(result){
             if (result.code == 0) {
@@ -110,13 +110,13 @@ function orderPay(oid, bid) {
 }
 
 function orderFinish(oid, bid) {
-    disableContainerButtons(bid);
+    disableOrderButtons(bid);
     $.ajax({
         type : "post",
         url : "/order/finish",
         dataType: "json",
         data : {
-            oid: oid,
+            id: oid,
         },
         success : function(result){
             if (result.code == 0) {
@@ -133,13 +133,13 @@ function orderFinish(oid, bid) {
 }
 
 function orderCancel(oid, bid) {
-    disableContainerButtons(bid);
+    disableOrderButtons(bid);
     $.ajax({
         type : "post",
         url : "/order/cancel",
         dataType: "json",
         data : {
-            oid: oid,
+            id: oid,
         },
         success : function(result){
             if (result.code == 0) {
@@ -165,17 +165,17 @@ function setOrderLineByBid(orderLine, order, bid) {
         "<td><div> " + order.createDate    + "</div> </td>\n" +
         "<td><div>"  + order.statusName    + "</div> </td>\n" +
         "<td id=\"buttonset" + bid + "\"" + "</td>\n";
-    changeButtonsByState(document.getElementById("buttonset" + bid), order.id, bid, order.state);
+    changeButtonsByStatus(document.getElementById("buttonset" + bid), order.id, bid, order.status);
 }
 
-function changeButtonsByState(buttonSet, oid, bid, state) {
-    if (state == -1) {
+function changeButtonsByStatus(buttonSet, oid, bid, status) {
+    if (status == '-1') {
         buttonSet.innerHTML = "<div>\n" +
             "<button type=\"button\" class=\"btn btn-outline-danger btn-sm\" id=\"delete"+bid+"\"" +
             "    onclick=\"orderDelete('"+oid+"','"+bid+"')\">删除订单</button>\n" +
             "</div>"
     }
-    if (state == 0) {
+    if (status == '0') {
         buttonSet.innerHTML = "<div>\n" +
             "<button type=\"button\" class=\"btn btn-outline-info btn-sm\" id=\"pay"+bid+"\"" +
             "    onclick=\"orderPay('"+oid+"','"+bid+"')\">付款</button>\n" +
@@ -183,13 +183,13 @@ function changeButtonsByState(buttonSet, oid, bid, state) {
             "    onclick=\"orderCancel('"+oid+"','"+bid+"')\">取消订单</button>\n" +
             "</div>"
     }
-    if (state == 1) {
+    if (status == '1') {
         buttonSet.innerHTML = "<div>\n" +
             "<button type=\"button\" class=\"btn btn-outline-info btn-sm\" id=\"finish"+bid+"\"" +
             "    onclick=\"orderPay('"+oid+"','"+bid+"')\">确认收货</button>\n" +
             "</div>"
     }
-    if (state == 2) {
+    if (status == '2') {
         buttonSet.innerHTML = "<div>\n" +
             "<button type=\"button\" class=\"btn btn-outline-danger btn-sm\" id=\"delete"+bid+"\"" +
             "    onclick=\"orderDelete('"+oid+"','"+bid+"')\">删除订单</button>\n" +

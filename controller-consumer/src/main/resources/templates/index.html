@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>index</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/bs4.pop.css">
-    <link rel="stylesheet" href="/static/css/App.css">
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/popper.js"></script>
-    <script src="/static/js/bootstrap.js"></script>
-    <script src="/static/js/bs4.pop.js"></script>
-    <script src="/static/js/main.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bs4.pop.css">
+    <link rel="stylesheet" href="/css/App.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/bs4.pop.js"></script>
+    <script src="/js/main.js"></script>
 </head>
 <body>
 当前用户：
@@ -47,7 +47,7 @@
                     <td th:text="${product.sales}"></td>
                     <td th:text="${product.price}"></td>
                     <td>
-                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#containerCreateModal"
+                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#orderCreateModal"
                                 th:id="create+(${indexInc.index})" th:data-userId="${user.id}"
                                 th:data-productName="${product.productName}" th:data-productId="${product.id}"
                                 onclick="modelFill(this.getAttribute('data-userId'), this.getAttribute('data-productId'), this.getAttribute('data-productName'))">购买</button>
@@ -57,7 +57,7 @@
             </table>
         </div>
         <div class="container tab-pane fade" id="orders">
-<!--            <button type="button" class="btn btn-primary" onclick="refreshContainers(Boolean(true))">刷新</button>-->
+<!--            <button type="button" class="btn btn-primary" onclick="refreshOrders()">刷新</button>-->
             <table class="table table-hover" id="orderTable">
                 <thead>
                 <tr>
@@ -142,9 +142,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="containerCreateAmount" class="col-sm-3 control-label">数量</label>
+                    <label for="orderCreateAmount" class="col-sm-3 control-label">数量</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="containerCreateAmount" name="amount" value="1"/>
+                        <input type="text" class="form-control" id="orderCreateAmount" name="amount" value="1"/>
                     </div>
                 </div>
             </div>
