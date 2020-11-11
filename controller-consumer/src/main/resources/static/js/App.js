@@ -224,7 +224,7 @@ function changeButtonsByState(buttonSet, cid, bid, state) {
 }
 
 function modelFill(repo, tag) {
-    document.getElementById("containerCreateRepoTag").setAttribute("value", repo + ":" + tag);
+    document.getElementById("orderCreateRepoTag").setAttribute("value", repo + ":" + tag);
 }
 
 function disableImageButtons(bid) {
@@ -236,7 +236,6 @@ function disableImageButtons(bid) {
     if (deleteImageButton != null) {
         deleteImageButton.disabled=true;
     }
-
 }
 
 function disableContainerButtons(bid) {

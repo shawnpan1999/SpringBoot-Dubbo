@@ -86,6 +86,7 @@ public class OrderServiceImpl implements OrderService {
         orderDAO.updateStatusById(id, 1);
         result.setCode(0);
         result.setMsg("订单付款成功");
+        result.getData().put("order", order);
         return result;
     }
 

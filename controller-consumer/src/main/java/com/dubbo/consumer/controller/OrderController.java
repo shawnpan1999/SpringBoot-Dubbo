@@ -1,12 +1,19 @@
 package com.dubbo.consumer.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dubbo.consumer.entity.OrderModel;
+import com.dubbo.entity.Order;
+import com.dubbo.entity.Product;
 import com.dubbo.service.OrderService;
+import com.dubbo.service.ProductService;
 import com.dubbo.util.ResultEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/order")
@@ -14,6 +21,9 @@ public class OrderController {
 
     @Reference
     private OrderService orderService;
+
+    @Reference
+    private ProductService productService;
 
     @ResponseBody
     @RequestMapping(value = "/create")
@@ -33,7 +43,20 @@ public class OrderController {
     @RequestMapping(value = "/list")
     public String listProducts(@RequestParam(value = "userId") int userId) {
         try {
-            ResultEntity result = orderService.listOrder(userId);
+            ResultEntity orderListResult = orderService.listOrder(userId);
+            List<Order> tempOrders = (List<Order>)orderListResult.getData().get("orders");
+            List<OrderModel> orders = new ArrayList<>();
+            ResultEntity tempResult;
+            String tempName;
+            for (Order order : tempOrders) {
+                tempResult = productService.getProduct(order.getProductId());
+                tempName = ((Product)tempResult.getData().get("product")).getProductName();
+                OrderModel orderModel = new OrderModel(order.getId(), tempName, order.getAmount(), order.getUnitPrice(), order.getTotalPrice(), order.getCreateDate(), order.getStatus());
+                orders.add(orderModel);
+            }
+            ResultEntity result = new ResultEntity();
+            result.setCode(0);
+            result.getData().put("orders", orders);
             return result.toJSONString();
         } catch (Exception e) {
             e.printStackTrace();

@@ -32,9 +32,13 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ResultEntity createProduct(String productName, int stock, float price, String imageUrl) {
+        //新建一个商品对象
         Product product = new Product(productName, stock, price, imageUrl);
+        //创建要返回的结果实体
         ResultEntity result = new ResultEntity();
+        //调用数据库连接对象进行添加商品操作
         productDAO.addProduct(product);
+        //设置返回的结果码、结果信息以及结果数据
         result.setCode(0);
         result.setMsg("创建商品成功");
         result.getData().put("product", product);
@@ -43,8 +47,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResultEntity updateStockSales(int id, int stock, int sales) {
+        //创建要返回的结果实体
         ResultEntity result = new ResultEntity();
+        //调用数据库连接对象进行更新库存和销量的操作
         productDAO.updateStockAndSalesById(id, stock, sales);
+        //设置返回的结果码、结果信息以及结果数据
         result.setCode(0);
         result.setMsg("修改销量库存成功");
         return result;
@@ -57,13 +64,17 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ResultEntity getProducts(String searchName) {
+        //创建要返回的结果实体
         ResultEntity result = new ResultEntity();
+        //调用数据库连接对象进行查询操作
         List<Product> products = productDAO.selectByProductName(searchName);
+        //如果查询到的列表为空，则返回失败信息
         if (products.isEmpty()) {
             result.setCode(1);
             result.setMsg("没有查询到商品");
             return result;
         }
+        //否则返回成功信息
         result.setCode(0);
         result.setMsg("共查询到" + products.size() + "个商品");
         result.getData().put("products", products);
@@ -77,13 +88,17 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ResultEntity getProduct(int id) {
+        //创建要返回的结果实体
         ResultEntity result = new ResultEntity();
+        //调用数据库连接对象进行查询操作
         Product product = productDAO.selectById(id);
+        //如果查询到的列表为空，则返回失败信息
         if (product == null) {
             result.setCode(1);
             result.setMsg("获取商品失败");
             return result;
         }
+        //否则返回成功信息
         result.setCode(0);
         result.setMsg("获取商品成功");
         result.getData().put("product", product);
@@ -92,9 +107,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResultEntity listProducts(int offset, int limit) {
+        //创建要返回的结果实体
         ResultEntity result = new ResultEntity();
         List<Product> products = new ArrayList<>();
+        //调用数据库连接对象进行查询操作
         products = productDAO.selectByOffset(offset, limit);
+        //返回成功信息
         result.setCode(0);
         result.setMsg("获取商品成功");
         result.getData().put("products", products);
@@ -108,8 +126,11 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ResultEntity deleteProduct(int id) {
+        //创建要返回的结果实体
         ResultEntity result = new ResultEntity();
+        //调用数据库连接对象进行删除操作
         productDAO.deleteById(id);
+        //返回成功信息
         result.setCode(0);
         result.setMsg("删除商品成功");
         return result;
