@@ -1,13 +1,10 @@
 package com.dubbo.consumer.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.dubbo.consumer.entity.HostHolder;
 import com.dubbo.entity.Product;
-import com.dubbo.service.OrderService;
 import com.dubbo.service.ProductService;
 import com.dubbo.service.UserService;
 import com.dubbo.util.ResultEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +19,6 @@ public class HomeController {
 
     @Reference
     private ProductService productService;
-
-    @Reference
-    private OrderService orderService;
-
-    @Autowired
-    private HostHolder hostHolder;
 
     @RequestMapping(value = "/")
     public String index(Model model) {

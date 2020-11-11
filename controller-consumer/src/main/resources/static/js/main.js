@@ -31,6 +31,33 @@ function orderCreate() {
     });
 }
 
+function login() {
+    var username = document.getElementById("loginUsername").value;
+    var password = document.getElementById("loginPassword").value;
+    $.ajax({
+        type : "post",
+        url : "/user/login",
+        dataType: "json",
+        data : {
+            username: username,
+            password: password,
+        },
+        success : function(result){
+            if (result.code == 0) {
+                bs4pop.notice("登录成功");
+                setTimeout(function () {
+                    location.reload();
+                }, 500);
+            } else {
+                bs4pop.notice(result.msg, {type: "danger"});
+            }
+        },
+        error : function(result){
+            bs4pop.notice("未知错误", {type: "danger"});
+        }
+    });
+}
+
 function refreshOrders(userId) {
     $.ajax({
         type : "post",
